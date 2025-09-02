@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Group Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: #e9ecef;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Website Group Classifier</h1>
+    <p>Paste website names below (separate by comma or new line):</p>
+    <textarea id="inputList" placeholder="Example: K9WIN, FAFA855&#10;FAFA191"></textarea>
+    <button onclick="classifyWebsites()">Classify</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        const group1 = [
+            "K9WIN", "FAFA191", "FAFA855", "FAFA117", "FAFA212"
+        ];
+
+        const group2 = [
+            "LYNSBOBET", "SBOBETV8", "FAFA777", "FAFA118", "FAFA888",
+            "FAFA789", "FAFA368", "FAFA288", "FAFA338", "FAFA999",
+            "FAFA988", "FAFA889", "FAFA009", "FAFA989", "FAFA898",
+            "FAFA333", "FAFA555", "FAFA168", "FAFA222", "FAFA666",
+            "FAFA365", "FAFA558"
+        ];
+
+        const group3 = [
+            "FAFA88", "FAFA2U", "FAFAJOKER", "FAFA012", "FAFA444",
+            "FAFA097", "FAFA298", "FAFA008", "FAFA99SKY", "FAFA138",
+            "FAFA678", "FAFA178", "FAFA321", "FAFAVIP", "FAFACASINO",
+            "FAFA787", "FAFA007", "FAFA123", "FAFA1X2", "FAFAGALAXY7",
+            "FAFA800", "MAHA168", "FAFA1"
+        ];
+
+        function classifyWebsites() {
+            const inputText = document.getElementById("inputList").value;
+
+            const inputList = inputText
+                .split(/[\n,]+/)
+                .map(x => x.trim().toUpperCase())
+                .filter(Boolean);
+
+            const result = {
+                group1: [],
+                group2: [],
+                group3: [],
+                noHave: []
+            };
+
+            inputList.forEach(site => {
+                if (group1.includes(site)) {
+                    result.group1.push(site);
+                } else if (group2.includes(site)) {
+                    result.group2.push(site);
+                } else if (group3.includes(site)) {
+                    result.group3.push(site);
+                } else {
+                    result.noHave.push(site);
+                }
+            });
+
+            displayResult(result);
+        }
+
+        function displayResult(result) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+        <h3>System 1 (Group 1)</h3>
+        <ul>${result.group1.map(site => `<li>${site}</li>`).join("")}</ul>
+
+        <h3>System 2 (Group 2)</h3>
+        <ul>${result.group2.map(site => `<li>${site}</li>`).join("")}</ul>
+
+        <h3>System 3 (Group 3)</h3>
+        <ul>${result.group3.map(site => `<li>${site}</li>`).join("")}</ul>
+
+        <h3>Not Found</h3>
+        <ul>${result.noHave.map(site => `<li>${site}</li>`).join("")}</ul>
+      `;
+        }
+    </script>
+
+</body>
+
+</html>
